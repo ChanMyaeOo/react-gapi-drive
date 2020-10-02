@@ -1,9 +1,11 @@
 export const initialState = {
-    user: false
+    user: false,
+    driveFiles: []
 }
 
 export const actionTypes = {
-    SET_USER: 'SET_USER'
+    SET_USER: 'SET_USER',
+    SET_DRIVE_FILES: 'SET_DRIVE_FILES'
 }
 
 const userReducer = (state, action) => {
@@ -12,6 +14,11 @@ const userReducer = (state, action) => {
             return {
                 ...state,
                 user: action.user
+            }
+        case actionTypes.SET_DRIVE_FILES:
+            return {
+                ...state,
+                driveFiles: action.driveFiles
             }
         default:
             return state;
