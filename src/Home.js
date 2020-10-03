@@ -1,30 +1,85 @@
 import React from "react";
 import { useStateValue } from "./context/UserStateProvider";
 import "./Home.css";
+import { actionTypes } from "./reducer/userReducer";
 
 let FOLDER_LEVEL = 0;
+let FOLDER_NAME = "";
+let FOLDER_ID = "";
+let FOLDER_PERMISSION = true;
+let NO_OF_FILES = 1000;
+let DRIVE_FILES = [];
+let FILE_COUNTER = 0;
+let FOLDER_ARRAY = [];
 
-function Home({ DRIVE_FILES }) {
+function Home({ DRIVE_FILES, getDriveFiles }) {
   const [{ user }, dispatch] = useStateValue();
 
   console.log(DRIVE_FILES[0], "DDDDD ...");
 
-  // return DRIVE_FILES.map((driveFile) => {
-  //   driveFile.fileType = driveFile.fileExtension == null ? "folder" : "file";
-  //   console.log("TTTTTT  ... ", driveFile.fileType);
-  //   return (
-  //     <div className="file-icon">
-  //       <div className="image-preview">
-  //         {driveFile.fileType != "file" ? (
-  //           <img src="./Images/folder.png" />
-  //         ) : (
-  //           <img src={`./Images/${driveFile.fileExtension}-icon.png`} />
-  //         )}
-  //         <div className="item-title">{driveFile.title}</div>
-  //       </div>
-  //     </div>
-  //   );
-  // });
+  const handleFolderClick = (e) => {
+    // console.log(e.currentTarget.attributes["data-level"].value);
+    browseFolder(e, 0);
+  };
+
+  const browseFolder = (e, flag) => {
+    // FOLDER_ID = e.currentTarget.attributes["data-id"].value;
+    dispatch({
+      type: actionTypes.SET_FOLDER_ID,
+      folderID: e.currentTarget.attributes["data-id"].value,
+    });
+    FOLDER_NAME = e.currentTarget.attributes["data-name"].value;
+    FOLDER_LEVEL = parseInt(e.currentTarget.attributes["data-level"].value);
+    FOLDER_PERMISSION = e.currentTarget.attributes["data-has-permission"].value;
+
+    if (typeof FOLDER_NAME === "undefined") {
+      FOLDER_NAME = "";
+      FOLDER_ID = "root";
+      FOLDER_LEVEL = 0;
+      FOLDER_PERMISSION = true;
+      FOLDER_ARRAY = [];
+    } else if (FOLDER_LEVEL == FOLDER_ARRAY.length && FOLDER_LEVEL > 0) {
+      // do nothing
+    } else if (FOLDER_LEVEL < FOLDER_ARRAY.length) {
+      let tmpArray = cloneObject(FOLDER_ARRAY);
+      FOLDER_ARRAY = [];
+
+      for (let i = 0; i < tmpArray.length; i++) {
+        FOLDER_ARRAY.push(tmpArray[i]);
+        if (tmpArray[i].Level >= FOLDER_LEVEL) {
+          break;
+        }
+      }
+    } else {
+      //breadcrumb navigation data insert
+      let fd = {
+        Name: FOLDER_NAME,
+        ID: FOLDER_ID,
+        Level: FOLDER_LEVEL,
+        Permission: FOLDER_PERMISSION,
+
+        // Title: $("#spanTitle").html(),
+        // CreatedDate: $("#spanCreatedDate").html(),
+        // ModifiedDate: $("#spanModifiedDate").html(),
+        // Owner: $("#spanOwner").html(),
+        // Size: $("#spanSize").html(),
+        // Extension: $("#spanExtension").html(),
+      };
+      FOLDER_ARRAY.push(fd);
+    }
+    getDriveFiles();
+  };
+
+  function cloneObject(obj) {
+    if (obj === null || typeof obj !== "object") {
+      return obj;
+    }
+    var temp = obj.constructor();
+    for (var key in obj) {
+      temp[key] = cloneObject(obj[key]);
+    }
+    return temp;
+  }
 
   let markup = [];
 
@@ -65,15 +120,13 @@ function Home({ DRIVE_FILES }) {
               title={`${textTitle}`}
               data-name={`${DRIVE_FILES[i].title}`}
               data-has-permission={`${DRIVE_FILES[i].hasPermission}`}
+              onClick={handleFolderClick}
             >
               <div className="image-preview">
                 <img src="./Images/folder.png" alt="" />
               </div>
             </div>
             <div className="item-title">{DRIVE_FILES[i].title}</div>
-            <button className="send-btn" data-link={`${DRIVE_FILES[i].id}`}>
-              Send
-            </button>
           </div>
         );
       } else if (DRIVE_FILES[i].thumbnailLink) {
