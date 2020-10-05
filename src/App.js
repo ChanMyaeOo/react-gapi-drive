@@ -124,25 +124,33 @@ function App() {
   return (
     <div className="app">
       {user ? (
-        <div>
+        <div className="content-wrapper">
           {driveFiles.length > 0 ? (
             <>
-              <div>
-                <span className="home-btn" onClick={handleHomeBtnClick}>
-                  HOME
-                </span>
+              <div className="nav-wrapper">
+                <div className="home-btn" onClick={handleHomeBtnClick}>
+                  Home
+                </div>
+
+                <div className="nav-title">
+                  &lt;&lt;&lt;&nbsp;Google Drive API Prototype&nbsp;&gt;&gt;&gt;
+                </div>
+
+                <div onClick={handleSignoutClick} className="sign-out-btn">
+                  Sign Out
+                </div>
               </div>
+
               <Home DRIVE_FILES={driveFiles} getDriveFiles={getDriveFiles} />
             </>
           ) : (
             <div>Loading ...</div>
           )}
-          <button onClick={handleSignoutClick}>Sign Out</button>
         </div>
       ) : (
         <div className="sign-in-container">
           <div className="sign-in">
-            <div className="sign-in-title">SIGN IN</div>
+            <div className="sign-in-title">Hello, Welcome!</div>
             <div className="sign-in-subtitle">Use your Google Account</div>
             <button onClick={handleAuthClick}>Sign In</button>
           </div>

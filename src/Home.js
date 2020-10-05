@@ -177,7 +177,11 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
         );
       }
     }
-    return <div>{markup}</div>;
+    return (
+      <div className="content-container">
+        <div className="file-content">{markup}</div>
+      </div>
+    );
   } else {
     return <div>Empty...</div>;
   }

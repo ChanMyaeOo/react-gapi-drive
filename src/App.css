@@ -1,3 +1,41 @@
+.nav-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  background-color: #f2f2f2;
+  opacity: 0.9;
+  height: 35px;
+  font-weight: 500;
+  color: #0e0e0e;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.nav-title {
+  color: rgb(37, 90, 107);
+}
+
+.home-btn {
+  padding: 15px;
+  cursor: pointer;
+  color: rgb(37, 90, 107);
+}
+
+.home-btn:hover {
+  color: #0e0e0e;
+}
+
+.sign-out-btn {
+  padding: 15px;
+  cursor: pointer;
+  color: rgb(37, 90, 107);
+}
+
+.sign-out-btn:hover {
+  color: #0e0e0e;
+}
+
 .sign-in-container {
   display: flex;
   justify-content: center;
@@ -6,7 +44,7 @@
 }
 
 .sign-in {
-  background-color: lightgreen;
+  background-color: rgb(37, 90, 107);
   width: 30vw;
   height: 30vh;
   display: flex;
@@ -18,11 +56,13 @@
 
 .sign-in-title {
   font-size: 35px;
+  color: #f2f2f2;
 }
 
 .sign-in-subtitle {
   font-size: 18px;
   padding: 10px;
+  color: #f2f2f2;
 }
 
 .sign-in > button {
@@ -36,7 +76,7 @@
 }
 
 .sign-in > button:hover {
-  color: lightgreen;
+  color: rgb(37, 90, 107);
   background-color: #fff;
   font-weight: bold;
   outline: 1px solid #0e0e0e;
