@@ -108,7 +108,7 @@ function App() {
 
   useEffect(() => {
     loadGoogleDriveApi();
-  }, []);
+  }, [folderID]);
 
   const handleAuthClick = () => {
     window.gapi.auth2.getAuthInstance().signIn();
@@ -118,12 +118,26 @@ function App() {
     window.gapi.auth2.getAuthInstance().signOut();
   };
 
+  const handleHomeBtnClick = () => {
+    dispatch({
+      type: actionTypes.SET_FOLDER_ID,
+      folderID: "root",
+    });
+  };
+
   return (
     <div className="App">
       {user ? (
         <div>
           {driveFiles.length > 0 ? (
-            <Home DRIVE_FILES={driveFiles} getDriveFiles={getDriveFiles} />
+            <>
+              <div>
+                <span className="home-btn" onClick={handleHomeBtnClick}>
+                  HOME
+                </span>
+              </div>
+              <Home DRIVE_FILES={driveFiles} getDriveFiles={getDriveFiles} />
+            </>
           ) : (
             <div>Loading ...</div>
           )}
