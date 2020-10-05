@@ -56,15 +56,12 @@ function App() {
       });
 
       getDriveFiles();
-      console.log("SIGNED IN ...");
-      console.log(folderID, "FOLDER ID from Data Layer");
     } else {
       // Dispatch action to Context API (data layer)
       dispatch({
         type: actionTypes.SET_USER,
         user: false,
       });
-      console.log("SIGNED OUT >>>");
     }
   };
 
@@ -90,7 +87,6 @@ function App() {
       if (!resp.error) {
         const responseItems = resp.items;
         DRIVE_FILES = responseItems;
-        console.log(DRIVE_FILES, "drive files ...");
 
         dispatch({
           type: actionTypes.SET_DRIVE_FILES,

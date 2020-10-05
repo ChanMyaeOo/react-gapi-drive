@@ -7,15 +7,11 @@ let FOLDER_LEVEL = 0;
 let FOLDER_NAME = "";
 let FOLDER_ID = "";
 let FOLDER_PERMISSION = true;
-let NO_OF_FILES = 1000;
-let DRIVE_FILES = [];
-let FILE_COUNTER = 0;
+
 let FOLDER_ARRAY = [];
 
 function Home({ DRIVE_FILES, getDriveFiles }) {
   const [{ user }, dispatch] = useStateValue();
-
-  console.log(DRIVE_FILES[0], "DDDDD ...");
 
   const handleFolderClick = (e) => {
     // console.log(e.currentTarget.attributes["data-level"].value);
@@ -57,13 +53,6 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
         ID: FOLDER_ID,
         Level: FOLDER_LEVEL,
         Permission: FOLDER_PERMISSION,
-
-        // Title: $("#spanTitle").html(),
-        // CreatedDate: $("#spanCreatedDate").html(),
-        // ModifiedDate: $("#spanModifiedDate").html(),
-        // Owner: $("#spanOwner").html(),
-        // Size: $("#spanSize").html(),
-        // Extension: $("#spanExtension").html(),
       };
       FOLDER_ARRAY.push(fd);
     }
@@ -109,7 +98,10 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
 
       if (DRIVE_FILES[i].fileType != "file") {
         markup.push(
-          <div className={`${DRIVE_FILES[i].fileType}-box`}>
+          <div
+            className={`${DRIVE_FILES[i].fileType}-box`}
+            key={`${DRIVE_FILES[i].id}`}
+          >
             <div
               className="folder-icon"
               data-file-counter={`${i}`}
@@ -131,7 +123,10 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
         );
       } else if (DRIVE_FILES[i].thumbnailLink) {
         markup.push(
-          <div className={`${DRIVE_FILES[i].fileType}-box`}>
+          <div
+            className={`${DRIVE_FILES[i].fileType}-box`}
+            key={`${DRIVE_FILES[i].id}`}
+          >
             <div className="image-icon" data-file-counter={`${i}`}>
               <div className="image-preview">
                 <a
@@ -163,7 +158,10 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
         DRIVE_FILES[i].fileExtension === "docx"
       ) {
         markup.push(
-          <div className={`${DRIVE_FILES[i].fileType}-box`}>
+          <div
+            className={`${DRIVE_FILES[i].fileType}-box`}
+            key={`${DRIVE_FILES[i].id}`}
+          >
             <div className="file-icon" data-file-counter={`${i}`}>
               <div className="image-preview">
                 <img
