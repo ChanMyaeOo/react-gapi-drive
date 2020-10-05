@@ -122,7 +122,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       {user ? (
         <div>
           {driveFiles.length > 0 ? (
@@ -140,7 +140,13 @@ function App() {
           <button onClick={handleSignoutClick}>Sign Out</button>
         </div>
       ) : (
-        <button onClick={handleAuthClick}>Sign In</button>
+        <div className="sign-in-container">
+          <div className="sign-in">
+            <div className="sign-in-title">SIGN IN</div>
+            <div className="sign-in-subtitle">Use your Google Account</div>
+            <button onClick={handleAuthClick}>Sign In</button>
+          </div>
+        </div>
       )}
     </div>
   );

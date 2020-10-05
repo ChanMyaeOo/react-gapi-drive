@@ -1,0 +1,43 @@
+.sign-in-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.sign-in {
+  background-color: lightgreen;
+  width: 30vw;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 5px 8px 5px #0e0e0e;
+}
+
+.sign-in-title {
+  font-size: 35px;
+}
+
+.sign-in-subtitle {
+  font-size: 18px;
+  padding: 10px;
+}
+
+.sign-in > button {
+  padding: 10px;
+  background-color: #f3f3f3;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.sign-in > button:hover {
+  color: lightgreen;
+  background-color: #fff;
+  font-weight: bold;
+  outline: 1px solid #0e0e0e;
+}
