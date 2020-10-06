@@ -18,6 +18,14 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
     browseFolder(e, 0);
   };
 
+  const handleSendBtn = (e) => {
+    alert(e.target.getAttribute("data-link"));
+    const resultFile = DRIVE_FILES.find((driveFile) => {
+      return driveFile.id === e.target.getAttribute("data-link");
+    });
+    console.log(resultFile);
+  };
+
   const browseFolder = (e, flag) => {
     // FOLDER_ID = e.currentTarget.attributes["data-id"].value;
     dispatch({
@@ -141,7 +149,11 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
               </div>
             </div>
             <div className="item-title">{DRIVE_FILES[i].title}</div>
-            <button className="send-btn" data-link={`${DRIVE_FILES[i].id}`}>
+            <button
+              className="send-btn"
+              data-link={`${DRIVE_FILES[i].id}`}
+              onClick={handleSendBtn}
+            >
               Send
             </button>
           </div>
@@ -170,13 +182,18 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
               </div>
             </div>
             <div className="item-title">{DRIVE_FILES[i].title}</div>
-            <button className="send-btn" data-link={`${DRIVE_FILES[i].id}`}>
+            <button
+              className="send-btn"
+              data-link={`${DRIVE_FILES[i].id}`}
+              onClick={handleSendBtn}
+            >
               Send
             </button>
           </div>
         );
       }
     }
+
     return (
       <div className="content-container">
         <div className="file-content">{markup}</div>
