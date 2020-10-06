@@ -26,6 +26,33 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
     console.log(resultFile);
   };
 
+  const fetchMarvinAPI = async (searchTerms) => {
+    const response = await fetch(
+      "https://marvin.urvin.ai:53117/matching/eigen_disambiguate?nca_scaling=2&",
+      {
+        method: "post",
+        headers: new Headers({
+          Authorization: "Basic " + btoa("dave" + ":" + "2Se7fR7Ffz4DQrnz"),
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify({
+          searchTerms,
+        }),
+      }
+    )
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+        // return undefined;
+      })
+      .catch((error) => {
+        alert("ERRor");
+      });
+    console.log(response);
+  };
+
   const browseFolder = (e, flag) => {
     // FOLDER_ID = e.currentTarget.attributes["data-id"].value;
     dispatch({
