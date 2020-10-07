@@ -3,6 +3,8 @@ import "./App.css";
 import { useStateValue } from "./context/UserStateProvider";
 import Home from "./Home";
 import { actionTypes } from "./reducer/userReducer";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import UploadPage from "./UploadPage";
 
 const SCOPES = ["https://www.googleapis.com/auth/drive", "profile"];
 const CLIENT_ID =
@@ -54,7 +56,6 @@ function App() {
         type: actionTypes.SET_USER,
         user: true,
       });
-
       getDriveFiles();
     } else {
       // Dispatch action to Context API (data layer)
@@ -87,7 +88,6 @@ function App() {
       if (!resp.error) {
         const responseItems = resp.items;
         DRIVE_FILES = responseItems;
-
         dispatch({
           type: actionTypes.SET_DRIVE_FILES,
           driveFiles: responseItems,
@@ -122,41 +122,56 @@ function App() {
   };
 
   return (
-    <div className="app">
-      {user ? (
-        <div className="content-wrapper">
-          {driveFiles.length > 0 ? (
-            <>
-              <div className="nav-wrapper">
-                <div className="home-btn" onClick={handleHomeBtnClick}>
-                  Home
-                </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/upload">
+            <UploadPage />
+          </Route>
 
-                <div className="nav-title">
-                  &lt;&lt;&lt;&nbsp;Google Drive API Prototype&nbsp;&gt;&gt;&gt;
-                </div>
+          <Route path="/">
+            {user ? (
+              <div className="content-wrapper">
+                {driveFiles.length > 0 ? (
+                  <>
+                    <div className="nav-wrapper">
+                      <div className="home-btn" onClick={handleHomeBtnClick}>
+                        Home
+                      </div>
+                      <Link to="/upload">Send to Dappy</Link>
 
-                <div onClick={handleSignoutClick} className="sign-out-btn">
-                  Sign Out
+                      <div
+                        onClick={handleSignoutClick}
+                        className="sign-out-btn"
+                      >
+                        Sign Out
+                      </div>
+                    </div>
+
+                    <Home
+                      DRIVE_FILES={driveFiles}
+                      getDriveFiles={getDriveFiles}
+                    />
+                  </>
+                ) : (
+                  <div>Loading ...</div>
+                )}
+              </div>
+            ) : (
+              <div className="sign-in-container">
+                <div className="sign-in">
+                  <div className="sign-in-title">Hello, Welcome!</div>
+                  <div className="sign-in-subtitle">
+                    Use your Google Account
+                  </div>
+                  <button onClick={handleAuthClick}>Sign In</button>
                 </div>
               </div>
-
-              <Home DRIVE_FILES={driveFiles} getDriveFiles={getDriveFiles} />
-            </>
-          ) : (
-            <div>Loading ...</div>
-          )}
-        </div>
-      ) : (
-        <div className="sign-in-container">
-          <div className="sign-in">
-            <div className="sign-in-title">Hello, Welcome!</div>
-            <div className="sign-in-subtitle">Use your Google Account</div>
-            <button onClick={handleAuthClick}>Sign In</button>
-          </div>
-        </div>
-      )}
-    </div>
+            )}
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -264,6 +264,14 @@
 }
 /*************** END NOTIFICATION ******************/
 
+/* Button container  */
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5px;
+}
+
 /****** Send Button *****/
 .send-btn {
   font-size: 10px;

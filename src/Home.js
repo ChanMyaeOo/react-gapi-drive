@@ -2,6 +2,7 @@ import React from "react";
 import { useStateValue } from "./context/UserStateProvider";
 import "./Home.css";
 import { actionTypes } from "./reducer/userReducer";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 let FOLDER_LEVEL = 0;
 let FOLDER_NAME = "";
@@ -18,12 +19,21 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
     browseFolder(e, 0);
   };
 
-  const handleSendBtn = (e) => {
+  const handleSendBtn = async (e) => {
     alert(e.target.getAttribute("data-link"));
     const resultFile = DRIVE_FILES.find((driveFile) => {
       return driveFile.id === e.target.getAttribute("data-link");
     });
     console.log(resultFile);
+
+    // const textResult = await fetch(`http://localhost:3001/api`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data, "Result from express ...");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message, "Fetching error ...");
+    //   });
   };
 
   const fetchMarvinAPI = async (searchTerms) => {
@@ -176,13 +186,19 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
               </div>
             </div>
             <div className="item-title">{DRIVE_FILES[i].title}</div>
-            <button
-              className="send-btn"
-              data-link={`${DRIVE_FILES[i].id}`}
-              onClick={handleSendBtn}
-            >
-              Send
-            </button>
+
+            <div className="btn-container">
+              <button
+                className="send-btn"
+                data-link={`${DRIVE_FILES[i].id}`}
+                onClick={handleSendBtn}
+              >
+                Send
+              </button>
+              <a href={`${DRIVE_FILES[i].webContentLink}`} target="_blank">
+                <GetAppIcon />
+              </a>
+            </div>
           </div>
         );
       } else if (
@@ -209,13 +225,19 @@ function Home({ DRIVE_FILES, getDriveFiles }) {
               </div>
             </div>
             <div className="item-title">{DRIVE_FILES[i].title}</div>
-            <button
-              className="send-btn"
-              data-link={`${DRIVE_FILES[i].id}`}
-              onClick={handleSendBtn}
-            >
-              Send
-            </button>
+
+            <div className="btn-container">
+              <button
+                className="send-btn"
+                data-link={`${DRIVE_FILES[i].id}`}
+                onClick={handleSendBtn}
+              >
+                Send
+              </button>
+              <a href={`${DRIVE_FILES[i].webContentLink}`} target="_blank">
+                <GetAppIcon />
+              </a>
+            </div>
           </div>
         );
       }
